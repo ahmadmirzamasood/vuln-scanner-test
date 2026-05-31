@@ -1,3 +1,4 @@
+# testing vulnscan
 # app.py — deliberately vulnerable for VulnScan testing
 import sqlite3
 import hashlib
