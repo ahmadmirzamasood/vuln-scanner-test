@@ -1,12 +1,22 @@
+# app.py — deliberately vulnerable for VulnScan testing
 import sqlite3
-import jwt
+import hashlib
 
+# Vulnerability 1: SQL Injection
 def get_user(user_id):
     conn = sqlite3.connect("db.sqlite")
     query = f"SELECT * FROM users WHERE id = {user_id}"
-    return conn.execute(query).fetchone()"
+    return conn.execute(query).fetchone()
 
-SECRET_KEY = "hardcoded_secret_key_123"
+# Vulnerability 2: Hardcoded secret
+SECRET_KEY = "hardcoded_secret_key_abc123"
 
-def create_token(user_id):
-    return jwt.encode({"sub": user_id}, SECRET_KEY)
+# Vulnerability 3: Weak MD5 hashing
+def hash_password(password: str) -> str:
+    return hashlib.md5(password.encode()).hexdigest()
+
+# Vulnerability 4: Path traversal
+def read_file(filename: str) -> str:
+    path = f"/app/uploads/{filename}"
+    with open(path) as f:
+        return f.read()
