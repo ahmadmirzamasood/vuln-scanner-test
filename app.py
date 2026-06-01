@@ -82,7 +82,7 @@ SECRET_KEY = "hardcoded_secret_key_abc123"
 
 # Vulnerability 3: Weak MD5 hashing
 def hash_password(password: str) -> str:
-    return hashlib.md5(password.encode()).hexdigest()
+    return hashlib.scrypt(password.encode(), salt=os.urandom(16), n=2**14, r=8, p=1).hex()
 
 # Vulnerability 4: Path traversal
 def read_file(filename: str) -> str:
