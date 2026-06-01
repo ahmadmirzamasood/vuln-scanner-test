@@ -61,12 +61,12 @@ def login():
 
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True)
+    app.run(debug=False)
 # Add this at the bottom of app.py on test-scan-1 branch only
 def get_admin(username):
     conn = sqlite3.connect("db.sqlite")
-    query = f"SELECT * FROM admins WHERE username = '{username}'"
-    return conn.execute(query).fetchone()
+    query = "SELECT * FROM admins WHERE username = ?"
+    return conn.execute(query, (username,)).fetchone()
 # app.py — deliberately vulnerable for VulnScan testing
 import sqlite3
 import hashlib
