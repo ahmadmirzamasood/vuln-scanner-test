@@ -43,14 +43,14 @@ def login():
     conn = sqlite3.connect("users.db")
     cursor = conn.cursor()
 
-    # VULNERABLE: user input is directly inserted into the SQL query
-    query = f"""
+    # FIXED: use parameterized query to prevent SQL injection
+    query = """
         SELECT * FROM users
-        WHERE username = '{username}'
-        AND password = '{password}'
+        WHERE username = ?
+        AND password = ?
     """
 
-    cursor.execute(query)
+    cursor.execute(query, (username, password))
     user = cursor.fetchone()
     conn.close()
 
